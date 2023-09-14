@@ -4,11 +4,16 @@ import { IoClose } from 'react-icons/io5';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { authModalState } from '@/atoms/authModalAtom';
 
 
 type EliteModalProps = {};
 
 const EliteModal: React.FC<EliteModalProps> = () => {
+
+	const modalState = useRecoilValue(authModalState);
+	const setModalState = useSetRecoilState(authModalState);
 
 	return (
 		<>
@@ -19,12 +24,14 @@ const EliteModal: React.FC<EliteModalProps> = () => {
 						<div className="flex justify-end p-2">
 							<button className="bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center
 											hover:bg-gray-800 hover:text-white text-white">
-								<IoClose className="h-5 w-5"/>
+								<IoClose className="h-5 w-5" onClick={() => { setModalState((oldState) => ({ ...oldState, isOpen: false })) }} />
 							</button>
 						</div>
-						{/* <SignIn /> */}
-						{/* <SignUp /> */}
-						<ForgotPassword />
+
+						{modalState.activeModal === 'signIn' && <SignIn />}
+						{modalState.activeModal === 'signUp' && <SignUp />}
+						{modalState.activeModal === 'forgotPassword' && <ForgotPassword />}
+
 					</div>
 				</div>
 			</div>
