@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { authModalState } from '@/atoms/authModalAtom';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase/firebase';
+import { useRouter } from 'next/router';
 
 type SignInProps = {};
 
 const SignIn: React.FC<SignInProps> = () => {
+
+	const router = useRouter();
 
 	const setModalState = useSetRecoilState(authModalState);
 
@@ -15,8 +20,44 @@ const SignIn: React.FC<SignInProps> = () => {
 		}));
 	};
 
+	const [inputs, setInputs] = useState({
+		email: '',
+		password: '',
+	});
+
+	const [
+		signInWithEmailAndPassword,
+		user,
+		loading,
+		error,
+	] = useSignInWithEmailAndPassword(auth);
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setInputs((oldState) => ({
+			...oldState,
+			[name]: value,
+		}));
+	};
+
+	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (!inputs.email || !inputs.password) return alert('Please fill in all fields');
+		try {
+			const user = await signInWithEmailAndPassword(inputs.email, inputs.password);
+			if (!user) return;
+			router.push('/');
+		} catch (error: any) {
+			alert(error.message);
+		}
+	};
+
+	useEffect(() => {
+		if (error) alert(error.message);
+	}, [error]);
+
 	return (
-		<form className="space-y-6 px-6 pb-4">
+		<form className="space-y-6 px-6 pb-4" onSubmit={handleLogin}>
 			<h3 className="text-xl font-medium text-white">Sign in to EliteCode</h3>
 			<div>
 				<label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-200">
@@ -24,6 +65,7 @@ const SignIn: React.FC<SignInProps> = () => {
 				</label>
 				<div className="mt-1">
 					<input
+						onChange={handleInputChange}
 						id="email"
 						name="email"
 						type="email"
@@ -44,6 +86,7 @@ const SignIn: React.FC<SignInProps> = () => {
 				</label>
 				<div className="mt-1">
 					<input
+						onChange={handleInputChange}
 						id="password"
 						name="password"
 						type="password"
@@ -64,7 +107,7 @@ const SignIn: React.FC<SignInProps> = () => {
 						focus:ring-dark-gray-6 focus:border-dark-gray-6.
 						 hover:bg-brand-orange-s"
 			>
-				Sign in
+				{loading ? 'Loading...' : 'Sign In'}
 			</button>
 
 			<button

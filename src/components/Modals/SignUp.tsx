@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { authModalState } from '@/atoms/authModalAtom';
@@ -9,7 +9,7 @@ import { auth } from '@/firebase/firebase';
 type SignupProps = {};
 
 const Signup: React.FC<SignupProps> = () => {
-	
+
 	const router = useRouter();
 
 	const setModalState = useSetRecoilState(authModalState);
@@ -44,6 +44,7 @@ const Signup: React.FC<SignupProps> = () => {
 
 	const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if (!inputs.displayName || !inputs.email || !inputs.password) return alert('Please fill in all fields');
 		try {
 			const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
 			if (!newUser) return;
@@ -52,6 +53,11 @@ const Signup: React.FC<SignupProps> = () => {
 			alert(error.message);
 		}
 	};
+
+	useEffect(() => {
+		if (error) alert(error.message);
+	}, [error]);
+
 
 
 
@@ -128,7 +134,7 @@ const Signup: React.FC<SignupProps> = () => {
 					focus:ring-dark-gray-6 focus:border-dark-gray-6
 					hover:bg-brand-orange-s"
 			>
-				Create Account
+				{loading ? 'Creating an account...' : 'Create Account'}
 			</button>
 
 			<div className="text-sm font-medium text-gray-350">
