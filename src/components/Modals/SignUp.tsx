@@ -1,10 +1,16 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { authModalState } from '@/atoms/authModalAtom';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase/firebase';
+
 
 type SignupProps = {};
 
 const Signup: React.FC<SignupProps> = () => {
+	
+	const router = useRouter();
 
 	const setModalState = useSetRecoilState(authModalState);
 
@@ -15,8 +21,42 @@ const Signup: React.FC<SignupProps> = () => {
 		}));
 	};
 
+	const [inputs, setInputs] = React.useState({
+		displayName: '',
+		email: '',
+		password: '',
+	});
+
+	const [
+		createUserWithEmailAndPassword,
+		user,
+		loading,
+		error
+	] = useCreateUserWithEmailAndPassword(auth);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setInputs((oldState) => ({
+			...oldState,
+			[name]: value,
+		}));
+	};
+
+	const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
+			if (!newUser) return;
+			router.push('/');
+		} catch (error: any) {
+			alert(error.message);
+		}
+	};
+
+
+
 	return (
-		<form className="space-y-6 px-6 pb-4">
+		<form className="space-y-6 px-6 pb-4" onSubmit={handleRegistration}>
 			<h3 className="text-xl font-medium text-white">Register to EliteCode</h3>
 
 			<div>
@@ -25,6 +65,7 @@ const Signup: React.FC<SignupProps> = () => {
 				</label>
 				<div className="mt-1">
 					<input
+						onChange={handleChange}
 						id="displayName"
 						name="displayName"
 						type="displayName"
@@ -45,6 +86,7 @@ const Signup: React.FC<SignupProps> = () => {
 				</label>
 				<div className="mt-1">
 					<input
+						onChange={handleChange}
 						id="email"
 						name="email"
 						type="email"
@@ -65,6 +107,7 @@ const Signup: React.FC<SignupProps> = () => {
 				</label>
 				<div className="mt-1">
 					<input
+						onChange={handleChange}
 						id="password"
 						name="password"
 						type="password"

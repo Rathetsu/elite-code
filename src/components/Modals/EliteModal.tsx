@@ -1,4 +1,3 @@
-import { Sign } from 'crypto';
 import React, { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import SignIn from './SignIn';
@@ -54,15 +53,14 @@ function useCloseModal() {
 	};
 
 	useEffect(() => {
-		window.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') {
-				closeModal();
-			}
-		});
-		return () => {
-			window.removeEventListener('keydown', () => { });
-		};
-	});
+
+		const handleEsc = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') closeModal();
+		}
+
+		window.addEventListener('keydown', handleEsc);
+		return () => window.removeEventListener('keydown', handleEsc);
+	}, []);
 
 	return closeModal;
 }
