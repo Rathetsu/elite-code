@@ -4,7 +4,7 @@ EliteCode is a coding challenge platform inspired by LeetCode, providing a space
 
 ## Technologies Used
 
-- **Frontend**: React, NextJS, TypeScript, Tailwind CSS
+- **Frontend**: React, NextJS, TypeScript, Tailwind CSS, RecoilJS
 - **Backend**: Firebase
 
 ## Contributing
