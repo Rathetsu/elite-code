@@ -1,8 +1,19 @@
 import React from 'react';
+import { useSetRecoilState } from 'recoil';
+import { authModalState } from '@/atoms/authModalAtom';
 
 type SignInProps = {};
 
 const SignIn: React.FC<SignInProps> = () => {
+
+	const setModalState = useSetRecoilState(authModalState);
+
+	const handleClick = (modal: "signIn" | "signUp" | "forgotPassword") => {
+		setModalState((oldState) => ({
+			...oldState,
+			activeModal: modal,
+		}));
+	};
 
 	return (
 		<form className="space-y-6 px-6 pb-4">
@@ -56,13 +67,16 @@ const SignIn: React.FC<SignInProps> = () => {
 				Sign in
 			</button>
 
-			<button className='flex w-full justify-end'>
+			<button
+				className='flex w-full justify-end'
+				onClick={() => handleClick('forgotPassword')}
+			>
 				<a href="#" className="w-full text-right text-sm font-medium block text-brand-orange hover:underline">Forgot your password?</a>
 			</button>
 
 			<div className="text-sm font-medium text-gray-350">
 				Not a member yet?
-				<a href="#" className="text-brand-orange pl-2 hover:underline">
+				<a href="#" className="text-brand-orange pl-2 hover:underline" onClick={() => handleClick('signUp')}>
 					Sign up now
 				</a>
 			</div>
