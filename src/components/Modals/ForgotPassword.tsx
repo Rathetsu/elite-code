@@ -16,14 +16,22 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 		console.log('success', success);
 		// BUG: returns success as true even if email is not associated with an account
 		if (success) {
-			toast.success('If the provided email address is associated with an account, a password reset email will be sent.');
+			toast.success('If the provided email address is associated with an account,\na password reset email will be sent.',
+				{
+					position: 'top-center',
+					autoClose: 4000,
+				});
 		}
 	};
 
 	useEffect(() => {
 		if (error) {
 			console.log(error);
-			toast.error(error.message);
+			toast.error(error.message,
+				{
+					position: 'top-center',
+					autoClose: 4000,
+				});
 		}
 	}, [error]);
 
