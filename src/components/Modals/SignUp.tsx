@@ -45,18 +45,18 @@ const Signup: React.FC<SignupProps> = () => {
 
 	const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!inputs.displayName || !inputs.email || !inputs.password) return toast.error('Please fill in all fields.', { position: 'top-center', autoClose: 4000 });
+		if (!inputs.displayName || !inputs.email || !inputs.password) return toast.error('Please fill in all fields.', { position: 'top-center', autoClose: 4000, theme: 'dark' });
 		try {
 			const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
 			if (!newUser) return;
 			router.push('/');
 		} catch (error: any) {
-			toast.error(error.message, { position: 'top-center', autoClose: 4000 });
+			toast.error(error.message, { position: 'top-center', autoClose: 4000, theme: 'dark' });
 		}
 	};
 
 	useEffect(() => {
-		if (error) toast.error(error.message, { position: 'top-center', autoClose: 4000 });
+		if (error) toast.error(error.message, { position: 'top-center', autoClose: 4000, theme: 'dark' });
 	}, [error]);
 
 

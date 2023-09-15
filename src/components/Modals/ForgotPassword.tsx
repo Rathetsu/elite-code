@@ -16,10 +16,12 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 		console.log('success', success);
 		// BUG: returns success as true even if email is not associated with an account
 		if (success) {
-			toast.success('If the provided email address is associated with an account,\na password reset email will be sent.',
+			toast.success("If the provided email address is associated with an account, a password reset email will be sent.",
 				{
 					position: 'top-center',
-					autoClose: 4000,
+					autoClose: 6000,
+					theme: 'dark',
+					className: 'w-96 h-25',
 				});
 		}
 	};
@@ -31,6 +33,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 				{
 					position: 'top-center',
 					autoClose: 4000,
+					theme: 'dark',
 				});
 		}
 	}, [error]);
