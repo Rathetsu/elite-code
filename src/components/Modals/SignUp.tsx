@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 import { authModalState } from '@/atoms/authModalAtom';
@@ -44,18 +45,18 @@ const Signup: React.FC<SignupProps> = () => {
 
 	const handleRegistration = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!inputs.displayName || !inputs.email || !inputs.password) return alert('Please fill in all fields');
+		if (!inputs.displayName || !inputs.email || !inputs.password) return toast.error('Please fill in all fields.');
 		try {
 			const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
 			if (!newUser) return;
 			router.push('/');
 		} catch (error: any) {
-			alert(error.message);
+			toast.error(error.message);
 		}
 	};
 
 	useEffect(() => {
-		if (error) alert(error.message);
+		if (error) toast.error(error.message);
 	}, [error]);
 
 

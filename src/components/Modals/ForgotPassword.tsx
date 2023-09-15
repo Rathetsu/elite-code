@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
 
@@ -15,14 +16,14 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 		console.log('success', success);
 		// BUG: returns success as true even if email is not associated with an account
 		if (success) {
-			alert('If the provided email address is associated with an account, a password reset email will be sent.');
+			toast.success('If the provided email address is associated with an account, a password reset email will be sent.');
 		}
 	};
 
 	useEffect(() => {
 		if (error) {
 			console.log(error);
-			alert(error.message);
+			toast.error(error.message);
 		}
 	}, [error]);
 

@@ -4,6 +4,7 @@ import { authModalState } from '@/atoms/authModalAtom';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 type SignInProps = {};
 
@@ -42,18 +43,18 @@ const SignIn: React.FC<SignInProps> = () => {
 
 	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!inputs.email || !inputs.password) return alert('Please fill in all fields');
+		if (!inputs.email || !inputs.password) return toast.error('Please fill in all fields.');
 		try {
 			const user = await signInWithEmailAndPassword(inputs.email, inputs.password);
 			if (!user) return;
 			router.push('/');
 		} catch (error: any) {
-			alert(error.message);
+			toast.error(error.message);
 		}
 	};
 
 	useEffect(() => {
-		if (error) alert(error.message);
+		if (error) toast.error(error.message);
 	}, [error]);
 
 	return (
