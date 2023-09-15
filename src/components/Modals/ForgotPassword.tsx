@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase/firebase';
 
-type ForgotPasswordProps = {
-
-};
+type ForgotPasswordProps = {};
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 
+	const [email, setEmail] = useState('');
+	const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
+
+	const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const success = await sendPasswordResetEmail(email);
+		console.log('success', success);
+		// BUG: returns success as true even if email is not associated with an account
+		if (success) {
+			alert('If the provided email address is associated with an account, a password reset email will be sent.');
+		}
+	};
+
+	useEffect(() => {
+		if (error) {
+			console.log(error);
+			alert(error.message);
+		}
+	}, [error]);
+
 	return (
-		<form className='space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8'>
-			<h3 className='text-xl fron-medium text-white'>Reset Password</h3>
+		<form
+			className='space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8'
+			onSubmit={handleResetPassword}
+		>
+			<h3 className='text-xl font-bold text-white'>Reset Password</h3>
 
 			<p className='text-sm text-white'>
-				Enter your email address and we'll send you a link to reset your password.
+				Forgotten your password? Enter your email address and we'll send you a link to reset your password.
 			</p>
 
 			<div>
@@ -22,10 +45,12 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 					type="email"
 					name="email"
 					id="email"
+					placeholder="name@email.com"
 					className='outline-none block w-full p-2.5 border-2 rounded-lg shadow-sm
 					sm:text-sm bg-gray-600 border-gray-500 
 					placeholder-gray-400
 					focus:outline-none focus:ring-brand-orange focus:border-brand-orange'
+					onChange={(e) => setEmail(e.target.value)}
 				/>
 			</div>
 
@@ -35,7 +60,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 						focus:ring-dark-gray-6 focus:border-dark-gray-6
 						 hover:bg-brand-orange-s"
 			>
-				Send password reset email
+				{sending ? 'Sending...' : 'Send password reset email'}
 			</button>
 
 		</form>
