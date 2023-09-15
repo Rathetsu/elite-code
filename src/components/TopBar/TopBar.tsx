@@ -1,10 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/firebase";
+import Logout from "../Buttons/Logout";
 
 type TopBarProps = {};
 
 const TopBar: React.FC<TopBarProps> = () => {
+
+	const [user] = useAuthState(auth);
 
 	return (
 		<nav className='relative flex h-[80px] w-full shrink-0 items-center px-5 bg-dark-layer-1 text-dark-gray-7'>
@@ -25,11 +30,38 @@ const TopBar: React.FC<TopBarProps> = () => {
 						</a>
 					</div>
 
-					<Link href='/auth'>
-						<button className='bg-dark-fill-3 py-1 px-2 cursor-pointer rounded-lg'>
-							Sign in
-						</button>
-					</Link>
+					{!user ? (
+						<Link href='/auth'>
+							<button className='bg-dark-fill-3 py-1 px-2 cursor-pointer rounded-lg'>
+								Sign in
+							</button>
+						</Link>
+					) :
+						(
+							<div className='flex items-center space-x-4'>
+								<div className='cursor-pointer group relative'>
+									<img
+										src='/avatar.png'
+										alt='User Profile'
+										className='h-8 w-8 rounded-full object-cover group-hover:opacity-80 transition-opacity duration-300'
+									/>
+
+									<div
+										className='absolute top-10 left-2/4 -translate-x-2/4 mx-auto rounded
+												bg-dark-fill-3 text-brand-orange
+												p-2 shadow-lg
+												z-40 group-hover:scale-100 scale-0
+												transition-all duration-300 ease-in-out'
+									>
+										<p className='text-sm'>{user.email}</p>
+									</div>
+								</div>
+
+								<Logout />
+
+							</div>
+						)
+					}
 				</div>
 			</div>
 		</nav>
