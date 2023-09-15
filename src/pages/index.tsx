@@ -1,11 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import TopBar from "@/components/TopBar/TopBar";
 
 export default function Home() {
 
 	return (
 		<>
 			<main className='bg-dark-layer-2 min-h-screen'>
-				<h1>test</h1>
+				<TopBar />
 			</main>
 		</>
 	);
