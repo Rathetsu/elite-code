@@ -1,15 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { BsList } from "react-icons/bs";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/firebase";
-import Logout from "../Buttons/Logout";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "@/atoms/authModalAtom";
+import Logout from "../Buttons/Logout";
 
-type TopBarProps = {};
+type TopBarProps = {
+	problemPage?: boolean;
+};
 
-const TopBar: React.FC<TopBarProps> = () => {
+const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 
 	const [user] = useAuthState(auth);
 
@@ -17,10 +21,31 @@ const TopBar: React.FC<TopBarProps> = () => {
 
 	return (
 		<nav className='relative flex h-[80px] w-full shrink-0 items-center px-5 bg-dark-layer-1 text-dark-gray-7'>
-			<div className={'flex w-full items-center justify-between max-w-[1200px] mx-auto'}>
+			<div className={`flex w-full mx-auto ${!problemPage ? 'max-w-[1200px]' : ''}`}>
 				<Link href='/' className='h-[70px] flex-1'>
 					<Image src='/ec_logo.png' alt='Logo' width={250} height={60} className='pb-5' />
 				</Link>
+
+				{problemPage && (
+					<div className='flex items-center gap-4 justify-center'>
+						<div className='flex items-center justify-center rounded bg-dark-fill-3 hover:bg-dark-fill-2 h-8 w-8 cursor-pointer'>
+							<FaChevronLeft />
+						</div>
+						<Link
+							href='/'
+							className='flex items-center gap-2 cursor-pointer font-medium max-w-[170px] text-dark-gray-8'
+						>
+							<div className='flex items-center justify-center rounded pt-0.5'>
+								<BsList />
+							</div>
+
+							<p>Problem List</p>
+						</Link>
+						<div className='flex items-center justify-center rounded bg-dark-fill-3 hover:bg-dark-fill-2 h-8 w-8 cursor-pointer'>
+							<FaChevronRight />
+						</div>
+					</div>
+				)}
 
 				<div className='flex items-center space-x-4 flex-1 justify-end'>
 					<div>
