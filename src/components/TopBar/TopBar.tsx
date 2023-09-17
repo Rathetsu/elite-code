@@ -8,6 +8,7 @@ import { auth } from "@/firebase/firebase";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "@/atoms/authModalAtom";
 import Logout from "../Buttons/Logout";
+import Timer from "../Timer/Timer";
 
 type TopBarProps = {
 	problemPage?: boolean;
@@ -58,6 +59,9 @@ const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 							Buy me a coffee
 						</a>
 					</div>
+
+
+					{problemPage && <Timer />}
 
 					{!user ? (
 						<Link href='/auth'>
