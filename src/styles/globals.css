@@ -24,6 +24,21 @@ body {
 		@apply absolute w-auto p-2 text-sm m-2 min-w-max translate-x-3 right-0 top-5 z-10
 		rounded-md shadow-md text-dark-layer-2 bg-gray-200 origin-center scale-0 transition-all duration-100 ease-linear;
 	}
+
+	.testCaseNumberText {
+		@apply font-medium items-center transition-all focus:outline-none inline-flex
+												bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg
+												px-4 py-1 cursor-pointer whitespace-nowrap text-sm;
+	}
+
+	.testCaseBox {
+		@apply w-full cursor-text rounded-lg border border-transparent mt-2 px-3 py-[10px] text-white bg-dark-fill-3;
+	}
+
+	.testCaseSubTitle {
+		@apply text-sm font-medium mt-4 text-white;
+	}
+
 }
 
 /* Dark Scrollbar */
