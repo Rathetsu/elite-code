@@ -51,7 +51,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = () => {
 							</p>
 							<p className='mt-3'>
 								You may assume that each input would have <strong>exactly one solution</strong>, and you
-								may not use thesame element twice.
+								may not use the same element twice.
 							</p>
 							<p className='mt-3'>You can return the answer in any order.</p>
 						</div>
@@ -66,7 +66,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = () => {
 										<strong className='text-white'>Input: </strong> nums = [2,7,11,15], target = 9{" "}
 										<br />
 										<strong>Output:</strong> [0,1] <br />
-										<strong>Explanation:</strong>Because nums[0] + nums[1] == 9, we return [0, 1].
+										<strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].
 									</pre>
 								</div>
 							</div>
@@ -79,7 +79,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = () => {
 										<strong className='text-white'>Input: </strong> nums = [3,2,4], target = 6{" "}
 										<br />
 										<strong>Output:</strong> [1,2] <br />
-										<strong>Explanation:</strong>Because nums[1] + nums[2] == 6, we return [1, 2].
+										<strong>Explanation:</strong> Because nums[1] + nums[2] == 6, we return [1, 2].
 									</pre>
 								</div>
 							</div>
