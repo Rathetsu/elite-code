@@ -105,7 +105,8 @@ const CodeSpace: React.FC<CodeSpaceProps> = () => {
 				</div>
 			</Split>
 			{/* Footer that contains a console and the submit and run buttons */}
-			<CodeSpaceFooter />
+			<div className=' mt-12'><CodeSpaceFooter /></div>
+			
 		</div>
 	);
 }
