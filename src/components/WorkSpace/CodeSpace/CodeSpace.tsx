@@ -12,14 +12,18 @@ type CodeSpaceProps = {};
 
 const CodeSpace: React.FC<CodeSpaceProps> = () => {
 
+	const startingCode = `function twoSum(nums, target) {
+		// Your code here
+};`
+
 	return (
-		<div className='flex flex-col bg-dark-layer-1 relative'>
+		<div className='flex flex-col bg-dark-layer-1 relative overflow-x-auto'>
 			<PreferenceBar />
 
 			<Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
 				<div className='w-full overflow-auto'>
 					<CodeMirror
-						value='const a = 1'
+						value={startingCode}
 						theme={vscodeDark}
 						extensions={[javascript()]}
 						style={{ fontSize: 16 }}
