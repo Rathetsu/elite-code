@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSetRecoilState } from 'recoil';
 import { authModalState } from '@/atoms/authModalAtom';
 
@@ -21,7 +22,7 @@ const NavBar: React.FC<NavBarProps> = () => {
 	return (
 		<div className="flex items-center  justify-between sm:px-12 px-2 md:px-24">
 			<Link href="/" className="flex items-center justify-center h-20">
-				<img src="/ec_logo.ico" alt="EliteCode" className="h-full" />
+				<Image src="/ec_logo.png" alt="EliteCode" width={200} height={200} />
 			</Link>
 			<div className="flex items-center">
 				<button
