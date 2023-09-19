@@ -5,6 +5,7 @@ import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { javascript } from '@codemirror/lang-javascript';
 
 import PreferenceBar from './PreferenceBar/PreferenceBar';
+import CodeSpaceFooter from '../CodeSpaceFooter'
 
 
 type CodeSpaceProps = {};
@@ -75,8 +76,32 @@ const CodeSpace: React.FC<CodeSpaceProps> = () => {
 						</div>
 					</div>
 
+					<div className='font-semibold my-4'>
+						<p className='testCaseSubTitle'>Input:</p>
+						<div className='testCaseBox'>
+							nums = [2, 7, 11, 15], target = 9
+						</div>
+						<p className='testCaseSubTitle'>Output:</p>
+						<div className='testCaseBox'>
+							[0, 1]
+						</div>
+					</div>
+
+					<div className='font-semibold my-4'>
+						<p className='testCaseSubTitle'>Input:</p>
+						<div className='testCaseBox'>
+							nums = [2, 7, 11, 15], target = 9
+						</div>
+						<p className='testCaseSubTitle'>Output:</p>
+						<div className='testCaseBox'>
+							[0, 1]
+						</div>
+					</div>
+
 				</div>
 			</Split>
+			{/* Footer that contains a console and the submit and run buttons */}
+			<CodeSpaceFooter />
 		</div>
 	);
 }

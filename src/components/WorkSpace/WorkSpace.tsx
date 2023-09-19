@@ -1,7 +1,7 @@
 import React from 'react';
 import Split from 'react-split';
 import ProblemDescription from './ProblemDescription/ProblemDescription';
-import CodeSpace from '../CodeSpace/CodeSpace';
+import CodeSpace from './CodeSpace/CodeSpace';
 
 type WorkSpaceProps = {};
 
