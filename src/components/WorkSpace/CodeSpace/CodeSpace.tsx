@@ -58,7 +58,7 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem }) => {
 					</div>
 
 					{/* Inputs and Outputs */}
-					<div className='font-semibold my-4'>
+					<div className='font-semibold my-4 mb-16'>
 						<p className='testCaseSubTitle'>Input:</p>
 						<div className='testCaseBox'>
 							{problem.examples[activeTestCaseId].inputText}
