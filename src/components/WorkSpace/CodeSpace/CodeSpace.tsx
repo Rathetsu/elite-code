@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Split from 'react-split';
 import CodeMirror from '@uiw/react-codemirror';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import { javascript } from '@codemirror/lang-javascript';
 
+import { Problem } from '@/utils/types/problem';
 import PreferenceBar from './PreferenceBar/PreferenceBar';
 import CodeSpaceFooter from '../CodeSpaceFooter'
 
 
-type CodeSpaceProps = {};
+type CodeSpaceProps = {
+	problem: Problem;
+};
 
-const CodeSpace: React.FC<CodeSpaceProps> = () => {
+const CodeSpace: React.FC<CodeSpaceProps> = ({ problem }) => {
 
-	const startingCode = `function twoSum(nums, target) {
-		// Your code here
-};`
+	const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
 
 	return (
 		<div className='flex flex-col bg-dark-layer-1 relative overflow-x-auto'>
@@ -23,7 +24,7 @@ const CodeSpace: React.FC<CodeSpaceProps> = () => {
 			<Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
 				<div className='w-full overflow-auto'>
 					<CodeMirror
-						value={startingCode}
+						value={problem.startingCode}
 						theme={vscodeDark}
 						extensions={[javascript()]}
 						style={{ fontSize: 16 }}
@@ -41,72 +42,38 @@ const CodeSpace: React.FC<CodeSpaceProps> = () => {
 
 					{/* Test Cases Body */}
 					<div className='flex'>
-						{/* Case 1 */}
-						<div className='mr-2 mt-2 items-start text-white'>
-							<div className='flex flex-wrap items-center gap-y-4'>
-								<div
-									className='testCaseNumberText'
-								>Case 1</div>
+						{problem.examples.map((example, idx) => (
+							<div
+								className='mr-2 mt-2 items-start text-gray-500'
+								key={idx}
+								onClick={() => setActiveTestCaseId(idx)}
+							>
+								<div className='flex flex-wrap items-center gap-y-4'>
+									<div
+										className={`testCaseNumberText ${activeTestCaseId === idx ? 'bg-dark-fill-2 text-brand-orange' : ''}`}
+									>Case {idx + 1}</div>
+								</div>
 							</div>
-						</div>
-
-						{/* Case 2 */}
-						<div className='mr-2 mt-2 items-start text-white'>
-							<div className='flex flex-wrap items-center gap-y-4'>
-								<div
-									className='testCaseNumberText'
-								>Case 2</div>
-							</div>
-						</div>
-
-						{/* Case 3 */}
-						<div className='mr-2 mt-2 items-start text-white'>
-							<div className='flex flex-wrap items-center gap-y-4'>
-								<div
-									className='testCaseNumberText'
-								>Case 3</div>
-							</div>
-						</div>
+						))}
 					</div>
 
+					{/* Inputs and Outputs */}
 					<div className='font-semibold my-4'>
 						<p className='testCaseSubTitle'>Input:</p>
 						<div className='testCaseBox'>
-							nums = [2, 7, 11, 15], target = 9
+							{problem.examples[activeTestCaseId].inputText}
 						</div>
 						<p className='testCaseSubTitle'>Output:</p>
 						<div className='testCaseBox'>
-							[0, 1]
-						</div>
-					</div>
-
-					<div className='font-semibold my-4'>
-						<p className='testCaseSubTitle'>Input:</p>
-						<div className='testCaseBox'>
-							nums = [2, 7, 11, 15], target = 9
-						</div>
-						<p className='testCaseSubTitle'>Output:</p>
-						<div className='testCaseBox'>
-							[0, 1]
-						</div>
-					</div>
-
-					<div className='font-semibold my-4'>
-						<p className='testCaseSubTitle'>Input:</p>
-						<div className='testCaseBox'>
-							nums = [2, 7, 11, 15], target = 9
-						</div>
-						<p className='testCaseSubTitle'>Output:</p>
-						<div className='testCaseBox'>
-							[0, 1]
+							{problem.examples[activeTestCaseId].outputText}
 						</div>
 					</div>
 
 				</div>
 			</Split>
 			{/* Footer that contains a console and the submit and run buttons */}
-			<div className=' mt-12'><CodeSpaceFooter /></div>
-			
+			<CodeSpaceFooter />
+
 		</div>
 	);
 }
