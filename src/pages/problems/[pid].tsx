@@ -14,7 +14,8 @@ const ProblemPage: React.FC<ProblemPageProps> = ({problem}) => {
 	const { width, height } = useWindowSize();
 
 	return (
-		<div className={`h-[${height}] w-[${width}] overflow-y-auto`}>
+		// <div className={`h-[${height}] w-[${width}] overflow-y-auto`}>
+		<div>
 			<TopBar problemPage />
 			<WorkSpace problem={problem} />
 		</div>

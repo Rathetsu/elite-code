@@ -17,14 +17,13 @@ type TopBarProps = {
 const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 
 	const [user] = useAuthState(auth);
-
 	const setAuthModalState = useSetRecoilState(authModalState);
 
 	return (
-		<nav className='relative flex h-[80px] w-full shrink-0 items-center px-5 bg-dark-layer-1 text-dark-gray-7'>
+		<nav className='relative flex h-[50px] w-full shrink-0 items-center px-5 bg-dark-layer-1 text-dark-gray-7'>
 			<div className={`flex w-full mx-auto ${!problemPage ? 'max-w-[1200px]' : ''}`}>
 				<Link href='/' className='h-[70px] flex-1'>
-					<Image src='/ec_logo.png' alt='Logo' width={250} height={60} className='pb-5' />
+					<Image src='/ec_logo.png' alt='Logo' width={170} height={40} className='py-[15px]' />
 				</Link>
 
 				{problemPage && (
