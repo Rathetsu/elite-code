@@ -18,7 +18,7 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem }) => {
 	const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
 
 	return (
-		<div className='flex flex-col bg-dark-layer-1 relative overflow-x-auto'>
+		<div className='flex flex-col bg-dark-layer-1 relative overflow-x-hidden overflow-y-clip'>
 			<PreferenceBar />
 
 			<Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
@@ -71,6 +71,7 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem }) => {
 
 				</div>
 			</Split>
+
 			{/* Footer that contains a console and the submit and run buttons */}
 			<CodeSpaceFooter />
 

@@ -3,6 +3,7 @@ import TopBar from '@/components/TopBar/TopBar';
 import WorkSpace from '@/components/WorkSpace/WorkSpace';
 import { problems } from '@/utils/ProblemData';
 import { Problem } from '@/utils/types/problem';
+import useWindowSize from "@/hooks/useWindowSize";
 
 type ProblemPageProps = {
 	problem: Problem;
@@ -10,10 +11,10 @@ type ProblemPageProps = {
 
 const ProblemPage: React.FC<ProblemPageProps> = ({problem}) => {
 
-	console.log(problem);
+	const { width, height } = useWindowSize();
 
 	return (
-		<div>
+		<div className={`h-[${height}] w-[${width}] overflow-y-auto`}>
 			<TopBar problemPage />
 			<WorkSpace problem={problem} />
 		</div>
