@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Problem } from '@/utils/types/problem';
+import { Problem, DBProblem } from '@/utils/types/problem';
 import { BsCheckCircle } from 'react-icons/bs';
 import useGetProblems from '@/hooks/useGetProblems';
 
@@ -8,13 +8,13 @@ type ProblemsTableProps = {
 	setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoading }) => {
+const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoading = () => { } }) => {
 
 	const problems = useGetProblems(setLoading);
 
 	return (
 		<tbody className='text-white'>
-			{problems.map((problem: Problem, idx: number) => {
+			{problems.map((problem: DBProblem, idx: number) => {
 
 				if (idx == 0) return null;
 
