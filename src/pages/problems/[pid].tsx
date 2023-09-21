@@ -9,7 +9,7 @@ type ProblemPageProps = {
 	problem: Problem;
 };
 
-const ProblemPage: React.FC<ProblemPageProps> = ({problem}) => {
+const ProblemPage: React.FC<ProblemPageProps> = ({ problem }) => {
 
 	const { width, height } = useWindowSize();
 

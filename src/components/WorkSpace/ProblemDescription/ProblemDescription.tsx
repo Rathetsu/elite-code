@@ -2,12 +2,17 @@ import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
 import { Problem } from "@/utils/types/problem";
+import useGetCurrentProblem from "@/hooks/useGetCurrentProblem";
+import { CircularSkeleton, RectangleSkeleton } from "@/components/Skeletons/Loaders";
 
 type ProblemDescriptionProps = {
 	problem: Problem;
 };
 
 const ProblemDescription: React.FC<ProblemDescriptionProps> = ({ problem }) => {
+
+	const { currentProblem, loading, problemDifficultyClassName } = useGetCurrentProblem(problem.id);
+
 	return (
 		<div className='bg-dark-layer-1'>
 			{/* TAB */}
@@ -24,27 +29,37 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({ problem }) => {
 						<div className='flex space-x-4'>
 							<div className='flex-1 mr-2 text-lg text-white font-medium'>{problem.title}</div>
 						</div>
-						<div className='flex items-center mt-3'>
-							<div
-								className={`text-olive bg-olive inline-block rounded-[21px] bg-opacity-[.15] px-2.5 py-1 text-xs font-medium capitalize `}
-							>
-								{problem.difficulty}
+						{!loading && currentProblem ? (
+							<div className='flex items-center mt-3'>
+								<div
+									className={`${problemDifficultyClassName} inline-block rounded-[21px] bg-opacity-[.15] px-2.5 py-1 text-xs font-medium capitalize`}
+								>
+									{currentProblem.difficulty}
+								</div>
+								<div className='rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s'>
+									<BsCheck2Circle />
+								</div>
+								<div className='flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-dark-gray-6'>
+									<AiFillLike />
+									<span className='text-xs'>{currentProblem.likes}</span>
+								</div>
+								<div className='flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-green-s text-dark-gray-6'>
+									<AiFillDislike />
+									<span className='text-xs'>{currentProblem.dislikes}</span>
+								</div>
+								<div className='cursor-pointer hover:bg-dark-fill-3  rounded p-[3px]  ml-4 text-xl transition-colors duration-200 text-green-s text-dark-gray-6 '>
+									<TiStarOutline />
+								</div>
 							</div>
-							<div className='rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s'>
-								<BsCheck2Circle />
+						) : (
+							<div className='flex mt-3 space-x-2'>
+								<RectangleSkeleton />
+								<CircularSkeleton />
+								<RectangleSkeleton />
+								<RectangleSkeleton />
+								<CircularSkeleton />
 							</div>
-							<div className='flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-dark-gray-6'>
-								<AiFillLike />
-								<span className='text-xs'>120</span>
-							</div>
-							<div className='flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-green-s text-dark-gray-6'>
-								<AiFillDislike />
-								<span className='text-xs'>2</span>
-							</div>
-							<div className='cursor-pointer hover:bg-dark-fill-3  rounded p-[3px]  ml-4 text-xl transition-colors duration-200 text-green-s text-dark-gray-6 '>
-								<TiStarOutline />
-							</div>
-						</div>
+						)}
 
 						{/* Problem Statement(paragraphs) */}
 						<div className='text-white text-sm'>
