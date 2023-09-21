@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Problem } from "../Problems/Problems";
+import { DBProblem } from "../utils/types/problem";
 import { firestore } from "@/firebase/firebase";
 import { query, collection, orderBy, getDocs } from "firebase/firestore";
 
 export default function useGetProblems(
-  setLoading: React.Dispatch<React.SetStateAction<boolean>> | undefined
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  const [problems, setProblems] = useState<Problem[]>([]);
+  const [problems, setProblems] = useState<DBProblem[]>([]);
 
   useEffect(() => {
     const fetchProblems = async () => {
@@ -16,9 +16,9 @@ export default function useGetProblems(
         orderBy("order", "asc")
       );
       const querySnapshot = await getDocs(q);
-      const problemsFetched: Problem[] = [];
+      const problemsFetched: DBProblem[] = [];
       querySnapshot.forEach((doc: any) => {
-        problemsFetched.push({ id: doc.id, ...doc.data() });
+        problemsFetched.push({ ...(doc.data() as DBProblem) });
       });
       setProblems(problemsFetched);
       setLoading(false);

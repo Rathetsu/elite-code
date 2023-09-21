@@ -12,6 +12,7 @@ export type Problem = {
   order: number;
   title: string;
   difficulty: string;
+  category: string;
   problemStatement: string;
   examples: Example[];
   constraints: string;

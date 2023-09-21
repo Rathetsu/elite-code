@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Problem } from '@/Problems/Problems';
+import { Problem } from '@/utils/types/problem';
 import { BsCheckCircle } from 'react-icons/bs';
 import useGetProblems from '@/hooks/useGetProblems';
 
