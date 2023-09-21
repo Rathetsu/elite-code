@@ -1,9 +1,9 @@
 export type Problem = {
   id: string;
+  order: number;
   title: string;
   difficulty: string;
   category: string;
-  order: number;
 };
 
 export const problems: Problem[] = [
