@@ -1,15 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
-import { problems, Problem } from '@/Problems/Problems';
+import { Problem } from '@/Problems/Problems';
 import { BsCheckCircle } from 'react-icons/bs';
+import useGetProblems from '@/hooks/useGetProblems';
 
-type ProblemsTableProps = {};
+type ProblemsTableProps = {
+	setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const ProblemsTable: React.FC<ProblemsTableProps> = () => {
+const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoading }) => {
+
+	const problems = useGetProblems(setLoading);
 
 	return (
 		<tbody className='text-white'>
 			{problems.map((problem: Problem, idx: number) => {
+
+				if (idx == 0) return null;
 
 				const difficultyColor =
 					problem.difficulty == 'Easy' ? 'text-dark-green-s'
