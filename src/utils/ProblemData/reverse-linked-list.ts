@@ -79,6 +79,7 @@ export const reverseLinkedList: Problem = {
   order: 2,
   title: "2. Reverse Linked List",
   difficulty: "Hard",
+  category: "Linked List",
   problemStatement: `<p class='mt-3'>Given the <code>head</code> of a singly linked list, reverse the list, and return <em>the reversed list</em>.</p>
 	`,
   examples: [

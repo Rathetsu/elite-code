@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -9,6 +10,8 @@ import { useSetRecoilState } from "recoil";
 import { authModalState } from "@/atoms/authModalAtom";
 import Logout from "../Buttons/Logout";
 import Timer from "../Timer/Timer";
+import { problems } from '@/utils/ProblemData';
+import { Problem } from "@/utils/types/problem";
 
 type TopBarProps = {
 	problemPage?: boolean;
@@ -18,6 +21,23 @@ const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 
 	const [user] = useAuthState(auth);
 	const setAuthModalState = useSetRecoilState(authModalState);
+	const router = useRouter();
+	const handleProblemNavigation = (isForward: boolean) => {
+		const { order } = problems[router.query.pid as string] as Problem;
+		const direction = isForward ? 1 : -1;
+		const problemsCount = Object.keys(problems).length;
+		const nextProblemOrder = order + direction;
+		if (isForward && nextProblemOrder > problemsCount) {
+			const firstProblemKey = Object.keys(problems)[0];
+			router.push(`/problems/${firstProblemKey}`);
+		} else if (!isForward && nextProblemOrder < 1) {
+			const lastProblemKey = Object.keys(problems)[problemsCount - 1];
+			router.push(`/problems/${lastProblemKey}`);
+		} else {
+			const nextProblemKey = Object.keys(problems)[nextProblemOrder - 1];
+			router.push(`/problems/${nextProblemKey}`);
+		}
+	};
 
 	return (
 		<nav className='relative flex h-[50px] w-full shrink-0 items-center px-5 bg-dark-layer-1 text-dark-gray-7'>
@@ -28,7 +48,10 @@ const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 
 				{problemPage && (
 					<div className='flex items-center gap-4 justify-center'>
-						<div className='flex items-center justify-center rounded bg-dark-fill-3 hover:bg-dark-fill-2 h-8 w-8 cursor-pointer'>
+						<div
+							className='flex items-center justify-center rounded bg-dark-fill-3 hover:bg-dark-fill-2 h-8 w-8 cursor-pointer'
+							onClick={() => handleProblemNavigation(false)}
+						>
 							<FaChevronLeft />
 						</div>
 						<Link
@@ -41,7 +64,10 @@ const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 
 							<p>Problem List</p>
 						</Link>
-						<div className='flex items-center justify-center rounded bg-dark-fill-3 hover:bg-dark-fill-2 h-8 w-8 cursor-pointer'>
+						<div
+							className='flex items-center justify-center rounded bg-dark-fill-3 hover:bg-dark-fill-2 h-8 w-8 cursor-pointer'
+							onClick={() => handleProblemNavigation(true)}
+						>
 							<FaChevronRight />
 						</div>
 					</div>
