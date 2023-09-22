@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TopBar from "@/components/TopBar/TopBar";
 import ProblemsTable from "@/components/ProblemsTable/ProblemsTable";
+import useHasMounted from "@/hooks/useHasMounted";
 
 const LoadingSkeleton = () => {
 	return (
@@ -19,6 +20,11 @@ const LoadingSkeleton = () => {
 export default function Home() {
 
 	const [loading, setLoading] = useState(true);
+	const hasMounted = useHasMounted();
+
+	if (!hasMounted) {
+		return null;
+	}
 
 	return (
 		<>
