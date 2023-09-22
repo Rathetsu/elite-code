@@ -29,5 +29,6 @@ export type DBProblem = {
   difficulty: string;
   likes: number;
   dislikes: number;
+  stars: number;
   solution?: string;
 };

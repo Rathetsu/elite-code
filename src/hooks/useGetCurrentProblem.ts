@@ -38,5 +38,5 @@ export default function useGetCurrentProblem(problemId: string) {
 
   }, [problemId]);
 
-  return { currentProblem, loading, problemDifficultyClassName };
+  return { currentProblem, loading, problemDifficultyClassName, setCurrentProblem };
 }

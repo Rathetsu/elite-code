@@ -20,6 +20,7 @@ focus:outline-none focus:ring-brand-orange focus:border-brand-orange`;
 		difficulty: '',
 		likes: 0,
 		dislikes: 0,
+		stars: 0,
 		solution: '',
 	});
 
@@ -34,6 +35,7 @@ focus:outline-none focus:ring-brand-orange focus:border-brand-orange`;
 			...inputs,
 			likes: 0,
 			dislikes: 0,
+			stars: 0,
 			order: Number(inputs.order),
 		}
 		await setDoc(doc(firestore, "problems", inputs.id), newProblem);
@@ -50,6 +52,7 @@ focus:outline-none focus:ring-brand-orange focus:border-brand-orange`;
 			difficulty: '',
 			likes: 0,
 			dislikes: 0,
+			stars: 0,
 			solution: '',
 		});
 
@@ -70,7 +73,7 @@ focus:outline-none focus:ring-brand-orange focus:border-brand-orange`;
 				<input onChange={handleInputChange} type='text' placeholder='title' name='title' className={classForInput} />
 				<input onChange={handleInputChange} type='text' placeholder='category' name='category' className={classForInput} />
 				<input onChange={handleInputChange} type='text' placeholder='difficulty' name='difficulty' className={classForInput} />
-				{/* No need to have likes and dislikes in the form, they're always initialized to 0 */}
+				{/* No need to have likes, dislikes and stars in the form, they're always initialized to 0 */}
 				<input onChange={handleInputChange} type='text' placeholder='solution?' name='solution' className={classForInput} />
 
 				<button className='bg-brand-orange-s text-gray-500 font-bold font-lg rounded-lg p-2 hover:bg-brand-orange hover:text-white'>
