@@ -1,9 +1,12 @@
 import React from 'react';
 import { BsChevronUp } from 'react-icons/bs';
 
-type CodeSpaceFooterProps = {};
+type CodeSpaceFooterProps = {
+	handleProblemSubmit: () => void;
+	handleProblemRun: () => void;
+};
 
-const CodeSpaceFooter: React.FC<CodeSpaceFooterProps> = () => {
+const CodeSpaceFooter: React.FC<CodeSpaceFooterProps> = ({ handleProblemSubmit, handleProblemRun }) => {
 
 	return (
 		<div className='flex bg-dark-layer-1 absolute bottom-0 z-10 w-full'>
@@ -17,10 +20,16 @@ const CodeSpaceFooter: React.FC<CodeSpaceFooterProps> = () => {
 					</button>
 				</div>
 				<div className='ml-auto flex items-center space-x-4'>
-					<button className='px-3 py-1.5 text-sm font-medium items-center whitespace-nowrap transition-all focus:outline-none inline-flex bg-dark-fill-3  hover:bg-dark-fill-2 text-dark-label-2 rounded-lg'>
+					<button
+						className='px-3 py-1.5 text-sm font-medium items-center whitespace-nowrap transition-all focus:outline-none inline-flex bg-dark-fill-3  hover:bg-dark-fill-2 text-dark-label-2 rounded-lg'
+						onClick={handleProblemRun}
+					>
 						Run
 					</button>
-					<button className='px-3 py-1.5 font-medium items-center transition-all focus:outline-none inline-flex text-sm text-white bg-dark-green-s hover:bg-green-3 rounded-lg'>
+					<button
+						className='px-3 py-1.5 font-medium items-center transition-all focus:outline-none inline-flex text-sm text-white bg-dark-green-s hover:bg-green-3 rounded-lg'
+						onClick={handleProblemSubmit}
+					>
 						Submit
 					</button>
 				</div>
