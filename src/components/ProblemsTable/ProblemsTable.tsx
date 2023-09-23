@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Problem, DBProblem } from '@/utils/types/problem';
 import { BsCheckCircle } from 'react-icons/bs';
 import useGetProblems from '@/hooks/useGetProblems';
+import useGetSolvedProblems from '@/hooks/useGetSolvedProblems';
 
 type ProblemsTableProps = {
 	setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,6 +12,7 @@ type ProblemsTableProps = {
 const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoading = () => { } }) => {
 
 	const problems = useGetProblems(setLoading);
+	const solvedProblems = useGetSolvedProblems();
 
 	return (
 		<tbody className='text-white'>
@@ -26,8 +28,8 @@ const ProblemsTable: React.FC<ProblemsTableProps> = ({ setLoading = () => { } })
 				return (
 					<tr className={`${idx % 2 == 1 ? 'bg-dark-layer-1' : ''}`} key={problem.id}>
 						<th className='px-2 py-4 font-medium whitespace-nowrap text-dark-green-s'>
-							{/* check if solved */}
-							<BsCheckCircle fontSize={"19"} width="19" />
+							{solvedProblems.includes(problem.id) ? <BsCheckCircle className='inline-block mr-2' /> : null}
+							
 						</th>
 						<td className='px-6 py-4'>
 							<Link href={`/problems/${problem.id}`} className='hover:text-blue-600 cursor-pointer'>
