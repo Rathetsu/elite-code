@@ -10,6 +10,7 @@ const Logout:React.FC<LogoutProps> = () => {
 	const [signOut, loading, error] = useSignOut(auth);
 
 	const handleLogout = async () => {
+		localStorage.clear();
 		const success = await signOut();
 		if (success) {
 			console.log('logged out successfully');
