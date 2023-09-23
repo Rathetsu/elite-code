@@ -46,7 +46,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ setSettings, settings }) 
 								<div className='w-[340px]'>
 									<h3 className=' text-base font-medium'>Font size</h3>
 									<h3 className='text-label-3  mt-1.5'>
-										Choose your preferred font size for the code editor.
+										Font Size
 									</h3>
 								</div>
 								<div className='w-[170px]'>
