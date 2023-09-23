@@ -45,9 +45,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ setSettings, settings }) 
 							<div className='mt-6 flex justify-between first:mt-0'>
 								<div className='w-[340px]'>
 									<h3 className=' text-base font-medium'>Font size</h3>
-									<h3 className='text-label-3  mt-1.5'>
+									{/* <h3 className='text-label-3  mt-1.5'>
 										Font Size
-									</h3>
+									</h3> */}
 								</div>
 								<div className='w-[170px]'>
 									<div className='relative'>
