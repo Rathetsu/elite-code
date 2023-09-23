@@ -32,6 +32,7 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, s
 
 	const onCodeChange = (value: string) => {
 		setUserCode(value);
+		localStorage.setItem(`code-${pid}`, JSON.stringify(value));
 	};
 
 	const handleProblemSubmit = async () => {
@@ -91,6 +92,14 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, s
 		handleProblemSubmit();
 	};
 
+	useEffect(() => {
+		const localStorageCode = localStorage.getItem(`code-${pid}`);
+		if (user && localStorageCode) {
+			setUserCode(JSON.parse(localStorageCode));
+		} else {
+			setUserCode(problem.startingCode);
+		}
+	}, [pid, user, problem.startingCode]);
 
 	return (
 		<div className='flex flex-col bg-dark-layer-1 relative overflow-x-hidden overflow-y-clip'>
