@@ -12,6 +12,7 @@ import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { firestore } from '@/firebase/firebase';
 
 import { Problem } from '@/utils/types/problem';
+import { SettingsInterface } from '@/utils/types/settings';
 import PreferenceBar from './PreferenceBar/PreferenceBar';
 import CodeSpaceFooter from '../CodeSpaceFooter'
 import { problems } from '@/utils/ProblemData';
@@ -27,6 +28,13 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, s
 
 	const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
 	const [userCode, setUserCode] = useState<string>(problem.startingCode);
+	const [settings, setSettings] = useState<SettingsInterface>({
+		settingsModalActive: false,
+		dropDownIsOpen: false,
+		fontSize: '16px',
+		theme: 'vscodeDark',
+	});
+
 	const [user] = useAuthState(auth);
 	const { query: { pid } } = useRouter();
 
@@ -108,7 +116,7 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, s
 
 	return (
 		<div className='flex flex-col bg-dark-layer-1 relative overflow-x-hidden overflow-y-clip'>
-			<PreferenceBar />
+			<PreferenceBar settings={settings} setSettings={setSettings} />
 
 			<Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[60, 40]} minSize={60}>
 				<div className='w-full overflow-auto'>
@@ -117,7 +125,7 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, s
 						onChange={onCodeChange}
 						theme={vscodeDark}
 						extensions={[javascript()]}
-						style={{ fontSize: 16 }}
+						style={{ fontSize: settings.fontSize }}
 					/>
 				</div>
 

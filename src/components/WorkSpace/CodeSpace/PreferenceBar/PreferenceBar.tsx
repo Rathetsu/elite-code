@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineFullscreen, AiOutlineFullscreenExit, AiOutlineSetting } from 'react-icons/ai';
+import { SettingsInterface } from '@/utils/types/settings';
+import SettingsModal from '@/components/Modals/SettingsModal';
 
-type PreferenceBarProps = {};
 
-const PreferenceBar: React.FC<PreferenceBarProps> = () => {
+type PreferenceBarProps = {
+	settings: SettingsInterface;
+	setSettings: React.Dispatch<React.SetStateAction<SettingsInterface>>;
+};
+
+const PreferenceBar: React.FC<PreferenceBarProps> = ({ settings, setSettings }) => {
 
 	const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 
@@ -14,9 +20,16 @@ const PreferenceBar: React.FC<PreferenceBarProps> = () => {
 			document.exitFullscreen();
 		}
 		setIsFullScreen(!isFullScreen);
-	}
+	};
 
-	useEffect (() => {
+	const toggleSettingsModal = () => {
+		setSettings({
+			...settings,
+			settingsModalActive: !settings.settingsModalActive,
+		});
+	};
+
+	useEffect(() => {
 
 		const exitHandler = () => {
 			if (document.fullscreenElement) {
@@ -51,7 +64,9 @@ const PreferenceBar: React.FC<PreferenceBarProps> = () => {
 			<div className='flex items-center m-2'>
 				<button className='preferenceButton group'>
 					<div className='h-4 w-4 text-dark-gray-6 font-bold text-lg'>
-						<AiOutlineSetting />
+						<AiOutlineSetting
+							onClick={toggleSettingsModal}
+						/>
 					</div>
 					<div className='preferenceTooltip group-hover:scale-100'>
 						Settings
@@ -70,6 +85,12 @@ const PreferenceBar: React.FC<PreferenceBarProps> = () => {
 					</div>
 				</button>
 			</div>
+			{settings.settingsModalActive ? (
+				<SettingsModal
+					settings={settings}
+					setSettings={setSettings}
+				/>
+			) : null}
 		</div>
 	);
 }
