@@ -1,9 +1,9 @@
 import React from 'react';
+import useHasMounted from '@/hooks/useHasMounted';
 import TopBar from '@/components/TopBar/TopBar';
 import WorkSpace from '@/components/WorkSpace/WorkSpace';
 import { problems } from '@/utils/ProblemData';
 import { Problem } from '@/utils/types/problem';
-import useWindowSize from "@/hooks/useWindowSize";
 
 type ProblemPageProps = {
 	problem: Problem;
@@ -11,7 +11,8 @@ type ProblemPageProps = {
 
 const ProblemPage: React.FC<ProblemPageProps> = ({ problem }) => {
 
-	const { width, height } = useWindowSize();
+	const hasMounted = useHasMounted();
+	if (!hasMounted) return null;
 
 	return (
 		// <div className={`h-[${height}] w-[${width}] overflow-y-auto`}>
