@@ -3,9 +3,9 @@ import { toast } from "react-toastify";
 import { firestore } from "@/firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
-type addProblemFormProps = {};
+type AddProblemFormProps = {};
 
-const addProblemForm: React.FC<addProblemFormProps> = () => {
+const AddProblemForm: React.FC<AddProblemFormProps> = () => {
 
 	const classForInput = `outline-none block w-full p-2.5 border-2 rounded-lg shadow-sm
 sm:text-sm bg-gray-600 border-gray-500 
@@ -84,4 +84,4 @@ focus:outline-none focus:ring-brand-orange focus:border-brand-orange`;
 
 	);
 }
-export default addProblemForm;
+export default AddProblemForm;

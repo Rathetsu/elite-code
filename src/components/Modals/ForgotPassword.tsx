@@ -46,7 +46,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
 			<h3 className='text-xl font-bold text-white'>Reset Password</h3>
 
 			<p className='text-sm text-white'>
-				Forgotten your password? Enter your email address and we'll send you a link to reset your password.
+				Forgotten your password? Enter your email address and we&apos;ll send you a link to reset your password.
 			</p>
 
 			<div>

@@ -110,6 +110,8 @@ const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 									<Image
 										src='/avatar.png'
 										alt='User Profile'
+										width={32}
+										height={32}
 										className='h-8 w-8 rounded-full object-cover group-hover:opacity-80 transition-opacity duration-300'
 									/>
 
