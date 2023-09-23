@@ -1,9 +1,37 @@
-import React from 'react';
-import { AiOutlineFullscreen, AiOutlineSetting } from 'react-icons/ai';
+import React, { useState, useEffect } from 'react';
+import { AiOutlineFullscreen, AiOutlineFullscreenExit, AiOutlineSetting } from 'react-icons/ai';
 
 type PreferenceBarProps = {};
 
 const PreferenceBar: React.FC<PreferenceBarProps> = () => {
+
+	const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+	const toggleFullScreen = () => {
+		if (!isFullScreen) {
+			document.documentElement.requestFullscreen();
+		} else {
+			document.exitFullscreen();
+		}
+		setIsFullScreen(!isFullScreen);
+	}
+
+	useEffect (() => {
+
+		const exitHandler = () => {
+			if (document.fullscreenElement) {
+				setIsFullScreen(true);
+			} else {
+				setIsFullScreen(false);
+			}
+		}
+		// Event Listeners for fullscreen mode on different browsers
+		document.addEventListener('fullscreenchange', exitHandler);
+		document.addEventListener('webkitfullscreenchange', exitHandler);
+		document.addEventListener('mozfullscreenchange', exitHandler);
+		document.addEventListener('MSFullscreenChange', exitHandler);
+
+	}, [isFullScreen]);
 
 	return (
 		<div className='flex items-center justify-between bg-dark-layer-2 h-11 w-full'>
@@ -30,9 +58,12 @@ const PreferenceBar: React.FC<PreferenceBarProps> = () => {
 					</div>
 				</button>
 
-				<button className='preferenceButton group'>
+				<button
+					className='preferenceButton group'
+					onClick={toggleFullScreen}
+				>
 					<div className='h-4 w-4 text-dark-gray-6 font-bold text-lg'>
-						<AiOutlineFullscreen />
+						{!isFullScreen ? <AiOutlineFullscreen /> : <AiOutlineFullscreenExit />}
 					</div>
 					<div className='preferenceTooltip group-hover:scale-100'>
 						Fullscreen
