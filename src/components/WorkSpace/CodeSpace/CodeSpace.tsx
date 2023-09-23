@@ -26,7 +26,7 @@ type CodeSpaceProps = {
 const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, setSolved }) => {
 
 	const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
-	const [userCode, setUserCode] = useState<string>(problem.startingCode);
+	let [userCode, setUserCode] = useState<string>(problem.startingCode);
 	const [user] = useAuthState(auth);
 	const { query: { pid } } = useRouter();
 
@@ -47,27 +47,32 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, s
 		}
 
 		try {
+			userCode = userCode.slice(userCode.indexOf(problem.startingFunctionName));
 			const callback = new Function(`return ${userCode}`)();
-			const success = problems[pid as string].testingFunction(callback);
+			const tester = problems[pid as string].testingFunction;
 
-			if (success) {
-				toast.success('Congrats! All tests have passed!', {
-					position: 'top-center',
-					autoClose: 3000,
-					hideProgressBar: true,
-					theme: 'dark',
-				});
-				setSuccessfullySolved(true);
+			if (typeof tester === 'function') {
+				const success = tester(callback);
 
-				setTimeout(() => {
-					setSuccessfullySolved(false);
-				}, 5000);
+				if (success) {
+					toast.success('Congrats! All tests have passed!', {
+						position: 'top-center',
+						autoClose: 3000,
+						hideProgressBar: true,
+						theme: 'dark',
+					});
+					setSuccessfullySolved(true);
 
-				const userRef = doc(firestore, 'users', user.uid);
-				await updateDoc(userRef, {
-					solvedProblems: arrayUnion(pid),
-				});
-				setSolved(true);
+					setTimeout(() => {
+						setSuccessfullySolved(false);
+					}, 5000);
+
+					const userRef = doc(firestore, 'users', user.uid);
+					await updateDoc(userRef, {
+						solvedProblems: arrayUnion(pid),
+					});
+					setSolved(true);
+				}
 			}
 		} catch (error: any) {
 			console.log('submission error', error.message);
