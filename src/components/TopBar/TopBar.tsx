@@ -107,7 +107,7 @@ const TopBar: React.FC<TopBarProps> = ({ problemPage }) => {
 						(
 							<div className='flex items-center space-x-4'>
 								<div className='cursor-pointer group relative'>
-									<img
+									<Image
 										src='/avatar.png'
 										alt='User Profile'
 										className='h-8 w-8 rounded-full object-cover group-hover:opacity-80 transition-opacity duration-300'

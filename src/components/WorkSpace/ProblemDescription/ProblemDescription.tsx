@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import { AiFillLike, AiFillDislike, AiOutlineLoading3Quarters, AiFillStar } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
@@ -363,7 +364,7 @@ const ProblemDescription: React.FC<ProblemDescriptionProps> = ({ problem, _solve
 									<p className='font-medium text-white '>Example {idx + 1}: </p>
 									{example.img ?
 										<div className='flex justify-center'>
-											<img src={example.img} alt='example' className='my-3' />
+											<Image src={example.img} alt='example' className='my-3' />
 										</div>
 										: null
 									}
