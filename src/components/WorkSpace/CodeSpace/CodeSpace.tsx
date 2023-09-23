@@ -26,7 +26,7 @@ type CodeSpaceProps = {
 const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, setSolved }) => {
 
 	const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
-	let [userCode, setUserCode] = useState<string>(problem.startingCode);
+	const [userCode, setUserCode] = useState<string>(problem.startingCode);
 	const [user] = useAuthState(auth);
 	const { query: { pid } } = useRouter();
 
@@ -47,8 +47,8 @@ const CodeSpace: React.FC<CodeSpaceProps> = ({ problem, setSuccessfullySolved, s
 		}
 
 		try {
-			userCode = userCode.slice(userCode.indexOf(problem.startingFunctionName));
-			const callback = new Function(`return ${userCode}`)();
+			let slicedUserCode = userCode.slice(userCode.indexOf(problem.startingFunctionName));
+			const callback = new Function(`return ${slicedUserCode}`)();
 			const tester = problems[pid as string].testingFunction;
 
 			if (typeof tester === 'function') {
